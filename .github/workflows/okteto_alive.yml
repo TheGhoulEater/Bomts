@@ -1,0 +1,42 @@
+name: Okteto Keep Alive
+
+on:
+  schedule:
+    - cron: '* 5 * * *'
+
+jobs:
+  ghouleater:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Okteto
+        uses: okteto/context@latest
+        with:
+          token: ${{ secrets.GHOULEATER_OKTETO_TOKEN }}
+
+      - name: Activate Namespace
+        uses: okteto/namespace@latest
+        with:
+          namespace: ${{ secrets.GHOULEATER_OKTETO_USER }}
+
+      - name: Trigger the pipeline
+        uses: okteto/pipeline@latest
+        with:
+          name: ${{ secrets.GHOULEATER_OKTETO_BOT }}
+
+  ghoulalt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Okteto
+        uses: okteto/context@latest
+        with:
+          token: ${{ secrets.GHOULALT_OKTETO_TOKEN }}
+
+      - name: Activate Namespace
+        uses: okteto/namespace@latest
+        with:
+          namespace: ${{ secrets.GHOULALT_OKTETO_USER }}
+
+      - name: Trigger the pipeline
+        uses: okteto/pipeline@latest
+        with:
+          name: ${{ secrets.GHOULALT_OKTETO_BOT }}
